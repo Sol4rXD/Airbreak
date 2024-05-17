@@ -29,6 +29,15 @@ bool BottomSWTrig = false;
 uint16_t ACCEL = 120;
 uint16_t ALT = 2000;
 
+// abV1
+double CURRENT_TIME;
+double CURRENT_VELOCITY;
+double CURRENT_ALTITUDE;
+double CURRENT_ACCEL;
+double APOGEE;
+
+bool airbreak_check;
+
 
 
 
