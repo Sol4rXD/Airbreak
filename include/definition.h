@@ -31,12 +31,18 @@ uint16_t ALT = 2000;
 
 // abV1
 double CURRENT_TIME;
+double timer;
 double CURRENT_VELOCITY;
+double INIT_VELOCITY;
+double LAST_VELOCITY = 0;
 double CURRENT_ALTITUDE;
 double CURRENT_ACCEL;
 double APOGEE;
 
 bool airbreak_check;
+bool init_check = false;
+
+long TIMER;
 
 
 
