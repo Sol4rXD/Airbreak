@@ -34,17 +34,18 @@ void setup() {
 
 void loop() {
     init_clock();
+    elapse_timer();
 
-    CURRENT_VELOCITY = calculate_velocity(LAST_VELOCITY, CURRENT_ACCEL, TIMER);
+    CURRENT_VELOCITY = calculate_velocity(LAST_VELOCITY, CURRENT_ACCEL, REAL_TIMER);
     LAST_VELOCITY = CURRENT_VELOCITY;
 
     CURRENT_TIME = calculate_time(CURRENT_VELOCITY, CURRENT_ACCEL);
     APOGEE = calculate_apogee(CURRENT_TIME, CURRENT_VELOCITY, CURRENT_ACCEL, CURRENT_ALTITUDE);
 
     if(APOGEE >= 3200 && !airbreak_check) {
-        airbreak_up();
+        airbreak_up();      
         airbreak_check = true;
-    }
+    }   
     else if(APOGEE < 2800 && airbreak_check) {
         airbreak_down();
         airbreak_check = false;
@@ -56,6 +57,11 @@ void init_clock() {
         TIMER = millis();
         init_check = true;
     }
+}
+
+void elapse_timer() {
+    REAL_TIMER = millis();
+    REAL_TIMER = REAL_TIMER - TIMER;
 }
 
 double calculate_velocity(double velo, double accel, double timer) {
@@ -72,7 +78,6 @@ double calculate_time(double velo, double accel) {
 // Using calculate time 
 double calculate_apogee(double time, double velo, double accel, double altitude) {
     double initial_altitude = altitude; 
-    double u = 0.0; 
 
     double apogee = initial_altitude + (velo * time) + (0.5 * accel * time * time);
     return apogee;

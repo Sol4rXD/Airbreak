@@ -42,8 +42,8 @@ double APOGEE;
 bool airbreak_check;
 bool init_check = false;
 
-long TIMER;
-
+long TIMER = 0;
+long REAL_TIMER = 0;
 
 
 
