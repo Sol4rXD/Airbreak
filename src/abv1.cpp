@@ -10,6 +10,7 @@ extern double calculate_time(double velo, double accel);
 extern void airbreak_up();
 extern void airbreak_down();
 extern void init_clock();
+extern void elapse_timer();
 
 void setup() {
     Serial.begin(115200);
@@ -42,11 +43,11 @@ void loop() {
     CURRENT_TIME = calculate_time(CURRENT_VELOCITY, CURRENT_ACCEL);
     APOGEE = calculate_apogee(CURRENT_TIME, CURRENT_VELOCITY, CURRENT_ACCEL, CURRENT_ALTITUDE);
 
-    if(APOGEE >= 3200 && !airbreak_check) {
+    if(APOGEE >= setpoint && !airbreak_check) {
         airbreak_up();      
         airbreak_check = true;
     }   
-    else if(APOGEE < 2800 && airbreak_check) {
+    else if(APOGEE < setpoint && airbreak_check) {
         airbreak_down();
         airbreak_check = false;
     }

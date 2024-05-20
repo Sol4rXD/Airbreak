@@ -45,6 +45,8 @@ bool init_check = false;
 long TIMER = 0;
 long REAL_TIMER = 0;
 
+double setpoint = 3000;
+
 
 
 
