@@ -39,13 +39,18 @@ double CURRENT_ALTITUDE;
 double CURRENT_ACCEL;
 double APOGEE;
 
-bool airbreak_check;
+bool airbreak_check = false;
 bool init_check = false;
 
 long TIMER = 0;
 long REAL_TIMER = 0;
 
 double setpoint = 3000;
+
+double step = 2500;
+double distance;
+
+bool airbreak_break = false;
 
 
 

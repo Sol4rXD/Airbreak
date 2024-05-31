@@ -45,7 +45,7 @@ void loop() {
             }
         }
     }
-    if (digitalRead(TopSW) == LOW) {
+    if (digitalRead(TopSW) == LOW && airbreak_check) {
 
         driver.shaft(false);
 
