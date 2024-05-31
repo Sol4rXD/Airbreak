@@ -45,7 +45,7 @@ void loop() {
             }
         }
     }
-    if (digitalRead(TopSW) == LOW && airbreak_check) {
+    if (digitalRead(TopSW) == LOW && !airbreak_check) {
 
         driver.shaft(false);
 
@@ -53,9 +53,10 @@ void loop() {
         delayMicroseconds(500);
         digitalWrite(STEP_PIN, LOW);
         delayMicroseconds(500);
+        airbreak_check = true;
         //Serial.println("UP");P
 
-    } else if (digitalRead(BottomSW) == LOW) {
+    } else if (digitalRead(BottomSW) == LOW && airbreak_check) {
 
         driver.shaft(true);
     
@@ -63,6 +64,7 @@ void loop() {
         delayMicroseconds(500);
         digitalWrite(STEP_PIN, LOW);
         delayMicroseconds(500);
+        airbreak_check = false;
         //Serial.println("DOWN");
         
     }
