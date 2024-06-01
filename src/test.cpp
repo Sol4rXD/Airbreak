@@ -6,6 +6,8 @@ TMC2209Stepper driver(&SERIAL_PORT, R_SENSE, DRIVER_ADDRESS);
 extern void airbreak_up();
 extern void airbreak_down();
 
+double counter = 2500;
+
 void setup() {
   Serial.begin(115200);
   pinMode(TopSW, INPUT_PULLUP);
@@ -45,7 +47,8 @@ void loop() {
             }
         }
     }
-    if (digitalRead(TopSW) == LOW && !airbreak_check) {
+    // UP
+    if (digitalRead(TopSW) == LOW && !airbreak_check && counter >= 0) {
 
         driver.shaft(false);
 
@@ -53,9 +56,12 @@ void loop() {
         delayMicroseconds(500);
         digitalWrite(STEP_PIN, LOW);
         delayMicroseconds(500);
-        airbreak_check = true;
-        //Serial.println("UP");P
+        counter -= 1;
+        if(counter == 0) {
+            airbreak_check = true;
+        }
 
+    // DOWN
     } else if (digitalRead(BottomSW) == LOW && airbreak_check) {
 
         driver.shaft(true);
@@ -64,9 +70,42 @@ void loop() {
         delayMicroseconds(500);
         digitalWrite(STEP_PIN, LOW);
         delayMicroseconds(500);
-        airbreak_check = false;
-        //Serial.println("DOWN");
+
+        counter += 1;
+
+        if(counter == 2500) {
+            airbreak_check = false;
+        }
+
+    } else if (digitalRead(BottomSW) == LOW && digitalRead(TopSW) == LOW && airbreak_check) {
+
+        driver.shaft(true);
+    
+        digitalWrite(STEP_PIN, HIGH);
+        delayMicroseconds(500);
+        digitalWrite(STEP_PIN, LOW);
+        delayMicroseconds(500);
+
+        counter += 1;
+
+        if(counter == 2500) {
+            airbreak_check = false;
+        }
         
+    } else if (digitalRead(BottomSW) == LOW && digitalRead(TopSW) == LOW && !airbreak_check) {
+
+        driver.shaft(false);
+    
+        digitalWrite(STEP_PIN, HIGH);
+        delayMicroseconds(500);
+        digitalWrite(STEP_PIN, LOW);
+        delayMicroseconds(500);
+
+        counter -= 1;
+
+        if(counter == 0) {
+            airbreak_check = true;
+        }
     }
 }
 
