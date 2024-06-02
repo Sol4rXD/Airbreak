@@ -55,12 +55,8 @@ void loop() {
     // UP
     if (digitalRead(TopSW) == LOW && !airbreak_check) {
 
-        driver.shaft(false);
-
-        digitalWrite(STEP_PIN, HIGH);
-        delayMicroseconds(500);
-        digitalWrite(STEP_PIN, LOW);
-        delayMicroseconds(500);
+        airbreak_up();
+        
         counter -= 1;
         if(counter == 0) {
             airbreak_check = true;
@@ -69,12 +65,7 @@ void loop() {
     // DOWN
     } else if (digitalRead(BottomSW) == LOW && airbreak_check) {
 
-        driver.shaft(true);
-    
-        digitalWrite(STEP_PIN, HIGH);
-        delayMicroseconds(500);
-        digitalWrite(STEP_PIN, LOW);
-        delayMicroseconds(500);
+        airbreak_down();
 
         counter += 1;
 
