@@ -64,15 +64,12 @@ void loop() {
 
     // DOWN
     } else if (digitalRead(BottomSW) == LOW && airbreak_check) {
-
         airbreak_down();
-
         counter += 1;
 
         if(counter == 2500) {
             airbreak_check = false;
         }
-
     } 
 
     if (digitalRead(BottomSW) == LOW && digitalRead(TopSW) == LOW && counter < 2500) {
@@ -102,7 +99,6 @@ void loop() {
             if(counter == 0) {
                 airbreak_check = true;
             }
-
         } else {
             airbreak_down();
             counter += 1;
